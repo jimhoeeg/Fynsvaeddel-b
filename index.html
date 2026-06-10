@@ -5,39 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event-konfigurator | Fyens Væddeløbsbane</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            'display': ['"Playfair Display"', 'serif'],
-            'sans': ['Inter', 'sans-serif'],
+            'display': ['"Open Sans"', 'sans-serif'],
+            'sans': ['"Open Sans"', 'sans-serif'],
           },
           colors: {
-            'turf': {
-              50:  '#f0f7f3',
-              100: '#dbede2',
-              200: '#b7dac6',
-              300: '#88bfa2',
-              400: '#5a9f7d',
-              500: '#3c8362',
-              600: '#2a6a4d',
-              700: '#1f5440',
-              800: '#143b2c',
-              900: '#0b2a1f',
-              950: '#051710',
+            'wine': {
+              50:  '#fbf2f5',
+              100: '#f6e2e8',
+              200: '#edc1cd',
+              300: '#df95aa',
+              400: '#cc657f',
+              500: '#b8425e',
+              600: '#9b2342',
+              700: '#811b37',
+              800: '#6a1830',
+              900: '#3a0d1a',
+              950: '#22070f',
             },
-            'gold': {
-              400: '#d9b25b',
-              500: '#c89a3a',
-              600: '#a67c25',
+            'charcoal': {
+              700: '#3a3a3a',
+              800: '#2a2a2a',
+              900: '#1f1f1f',
             }
           },
           boxShadow: {
-            'card':   '0 4px 14px -2px rgba(20, 59, 44, 0.08)',
-            'cardHover': '0 12px 32px -8px rgba(20, 59, 44, 0.22)',
-            'selected':  '0 8px 28px -6px rgba(42, 106, 77, 0.45)',
+            'card':   '0 4px 14px -2px rgba(58, 13, 26, 0.08)',
+            'cardHover': '0 12px 32px -8px rgba(58, 13, 26, 0.22)',
+            'selected':  '0 8px 28px -6px rgba(155, 35, 66, 0.40)',
           }
         }
       }
@@ -45,11 +45,9 @@
   </script>
   <style>
     body {
-      background:
-        radial-gradient(1200px 600px at 10% -10%, #dbede2 0%, transparent 60%),
-        radial-gradient(900px 500px at 100% 0%, #fdf6e3 0%, transparent 55%),
-        #f8faf9;
-      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      font-family: 'Open Sans', sans-serif;
+      color: #2a2a2a;
     }
     .step-section { display: none; animation: fadeIn .45s ease both; }
     .step-section.active { display: block; }
@@ -63,14 +61,14 @@
       background: #fff;
     }
     .choice-card:hover {
-      border-color: #88bfa2;
+      border-color: #df95aa;
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px -8px rgba(20, 59, 44, 0.18);
+      box-shadow: 0 12px 32px -8px rgba(58, 13, 26, 0.18);
     }
     .choice-card.selected {
-      border-color: #2a6a4d;
-      background: linear-gradient(180deg, #f0f7f3 0%, #ffffff 100%);
-      box-shadow: 0 10px 30px -8px rgba(42, 106, 77, 0.42);
+      border-color: #9b2342;
+      background: linear-gradient(180deg, #fbf2f5 0%, #ffffff 100%);
+      box-shadow: 0 10px 30px -8px rgba(155, 35, 66, 0.40);
     }
     .choice-card.selected .check-mark {
       opacity: 1;
@@ -83,47 +81,36 @@
     }
     .progress-bar-fill {
       transition: width .5s cubic-bezier(.4,.0,.2,1);
-      background: linear-gradient(90deg, #1f5440 0%, #2a6a4d 50%, #c89a3a 100%);
-    }
-    .glass {
-      background: rgba(255,255,255,0.72);
-      backdrop-filter: saturate(180%) blur(14px);
-      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      background: linear-gradient(90deg, #6a1830 0%, #9b2342 100%);
     }
     .btn-primary {
-      background: linear-gradient(135deg, #1f5440 0%, #2a6a4d 100%);
+      background: #9b2342;
       transition: all .2s ease;
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, #143b2c 0%, #1f5440 100%);
-      box-shadow: 0 10px 24px -10px rgba(20, 59, 44, 0.6);
-      transform: translateY(-1px);
+      background: #811b37;
+      box-shadow: 0 8px 20px -8px rgba(155, 35, 66, 0.55);
     }
     .btn-primary:disabled {
       background: #cbd5e1;
       cursor: not-allowed;
       box-shadow: none;
-      transform: none;
     }
     .btn-ghost {
       transition: all .2s ease;
     }
     .btn-ghost:hover {
-      background: #f0f7f3;
-      color: #1f5440;
+      background: #fbf2f5;
+      color: #9b2342;
     }
     .tip-card {
-      background: linear-gradient(180deg, #ffffff 0%, #f0f7f3 100%);
-      border: 1px solid #dbede2;
+      background: #ffffff;
+      border: 1px solid #f6e2e8;
     }
-    .summary-pill {
-      background: #f0f7f3;
-      color: #143b2c;
-    }
-    /* Subtle horse-track decorative line */
-    .track-line {
-      background-image: repeating-linear-gradient(90deg, #c89a3a 0 14px, transparent 14px 28px);
-      height: 3px;
+    .accent-bar {
+      background: #9b2342;
+      height: 4px;
+      width: 56px;
       border-radius: 2px;
     }
     input[type="text"], input[type="email"], input[type="tel"] {
@@ -131,41 +118,66 @@
     }
     input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
       outline: none;
-      border-color: #2a6a4d;
-      box-shadow: 0 0 0 4px rgba(42, 106, 77, 0.12);
+      border-color: #9b2342;
+      box-shadow: 0 0 0 4px rgba(155, 35, 66, 0.15);
     }
     .badge {
-      background: rgba(200, 154, 58, 0.15);
-      color: #8a6418;
+      background: #fbf2f5;
+      color: #9b2342;
+      border: 1px solid #f6e2e8;
+    }
+    /* Diagonal image cutout — echoes the website's hero/section style */
+    .diagonal-section {
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), 0 100%);
+    }
+    /* Header underline like nav active state */
+    .nav-active {
+      border-bottom: 3px solid #9b2342;
+      padding-bottom: 4px;
     }
   </style>
 </head>
 <body class="min-h-screen text-slate-800">
 
-  <!-- HEADER -->
-  <header class="relative">
-    <div class="max-w-6xl mx-auto px-6 pt-8 pb-4 flex items-center justify-between">
+  <!-- HEADER (matches site nav) -->
+  <header class="relative border-b border-slate-100 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl bg-turf-800 text-white grid place-items-center shadow-card">
-          <!-- Horse silhouette icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-gold-400">
+        <!-- Logo badge — circular, mimics the FVB seal -->
+        <div class="w-14 h-14 rounded-full bg-wine-600 text-white grid place-items-center shadow-card border-2 border-wine-600">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white">
             <path d="M19.5 4.5l1 1c.3.3.3.7 0 1L19 8l1 2-2 1-1-1c-1 1.5-2 2.5-3 3v3l1 2v3h-2v-2l-1-2-2 1v3H8v-3l-2-2-2 1v4H2v-5l2-3v-3c0-3 2-5 5-5h3l3-1 2-1c.3-.1.7 0 1 .3l1 1z"/>
           </svg>
         </div>
         <div>
-          <div class="text-xs uppercase tracking-widest text-turf-700 font-semibold">Fyens Væddeløbsbane</div>
-          <div class="font-display text-xl text-turf-900">Event-konfigurator</div>
+          <div class="text-[11px] uppercase tracking-[0.2em] text-wine-600 font-bold">Fyens Væddeløbsbane</div>
+          <div class="font-display text-lg font-bold text-charcoal-900 tracking-tight">Konferencer og Firmaevents</div>
         </div>
       </div>
-      <div class="hidden sm:flex items-center gap-2 text-sm text-slate-500">
-        <span class="w-2 h-2 rounded-full bg-turf-500 animate-pulse"></span>
-        B2B Event Designer · 2 min.
-      </div>
-    </div>
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="track-line w-full"></div>
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-charcoal-700">
+        <span class="hover:text-wine-600 cursor-pointer transition-colors">Forside</span>
+        <span class="hover:text-wine-600 cursor-pointer transition-colors">Om</span>
+        <span class="hover:text-wine-600 cursor-pointer transition-colors">Galleri</span>
+        <span class="nav-active text-wine-600">Event-konfigurator</span>
+        <span class="hover:text-wine-600 cursor-pointer transition-colors">Kontakt</span>
+      </nav>
     </div>
   </header>
+
+  <!-- HERO -->
+  <section class="bg-charcoal-900 text-white relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 py-12 sm:py-16">
+      <div class="max-w-2xl">
+        <div class="accent-bar mb-5"></div>
+        <h1 class="font-display font-bold text-3xl sm:text-5xl leading-tight mb-4">
+          Skab jeres næste firmaevent <span class="text-wine-300">på banen</span>
+        </h1>
+        <p class="text-slate-300 text-lg leading-relaxed max-w-xl">
+          Brug 2 minutter på vores konfigurator, og få en skræddersyet event-pakke retur — med 3 ekspertråd, der matcher jeres kultur og mål.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- MAIN -->
   <main class="max-w-4xl mx-auto px-6 py-8 sm:py-12">
@@ -173,57 +185,57 @@
     <!-- Progress -->
     <div id="progressWrap" class="mb-10">
       <div class="flex items-center justify-between mb-3">
-        <div class="text-sm font-medium text-turf-800">
+        <div class="text-sm font-semibold text-wine-700">
           Trin <span id="currentStepLabel">1</span> af <span id="totalStepsLabel">8</span>
         </div>
         <div class="text-sm text-slate-500"><span id="progressPercent">12</span>% færdig</div>
       </div>
-      <div class="h-2.5 rounded-full bg-slate-200 overflow-hidden">
+      <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
         <div id="progressBar" class="progress-bar-fill h-full rounded-full" style="width: 12%"></div>
       </div>
     </div>
 
     <!-- STEPS CONTAINER -->
-    <div id="stepsContainer" class="glass rounded-3xl shadow-card p-6 sm:p-10 border border-white/60">
+    <div id="stepsContainer" class="bg-white rounded-xl shadow-card p-6 sm:p-10 border border-slate-100">
 
       <!-- TRIN 1 -->
       <section class="step-section active" data-step="1">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Anledning</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Hvad er anledningen?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Hvad er anledningen?</h2>
           <p class="text-slate-500 mt-2">Vælg den anledning, der bedst matcher jeres planlagte event.</p>
         </div>
         <div class="grid sm:grid-cols-2 gap-4" data-group="single" data-name="anledning">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="faglig">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="faglig">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">📊</div>
-            <div class="font-semibold text-turf-900">Det faglige ryk</div>
+            <div class="font-bold text-charcoal-900">Det faglige ryk</div>
             <div class="text-sm text-slate-500 mt-1">Dagsmøde, generalforsamling eller strategiseminar.</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="fredagsbar">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="fredagsbar">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🍺</div>
-            <div class="font-semibold text-turf-900">Den uformelle fredagsbar</div>
+            <div class="font-bold text-charcoal-900">Den uformelle fredagsbar</div>
             <div class="text-sm text-slate-500 mt-1">Netværk, kold fadøl og spænding.</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="fejring">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="fejring">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🥂</div>
-            <div class="font-semibold text-turf-900">Den store fejring</div>
+            <div class="font-bold text-charcoal-900">Den store fejring</div>
             <div class="text-sm text-slate-500 mt-1">Årsfest, jubilæum eller julefrokost.</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="teambuilding">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="teambuilding">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🏇</div>
-            <div class="font-semibold text-turf-900">Teambuilding med fart på</div>
+            <div class="font-bold text-charcoal-900">Teambuilding med fart på</div>
             <div class="text-sm text-slate-500 mt-1">Ryst-sammen-dag med fokus på konkurrence.</div>
           </div>
         </div>
@@ -233,40 +245,40 @@
       <section class="step-section" data-step="2">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Gæsteantal</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Hvor mange gæster ruller ind på banen?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Hvor mange gæster ruller ind på banen?</h2>
           <p class="text-slate-500 mt-2">Vi tilpasser lokaler, bemanding og forplejning efter antal.</p>
         </div>
         <div class="grid sm:grid-cols-2 gap-4" data-group="single" data-name="gaester">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="10-25">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="10-25">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">👥</div>
-            <div class="font-semibold text-turf-900">Det tætte hold</div>
+            <div class="font-bold text-charcoal-900">Det tætte hold</div>
             <div class="text-sm text-slate-500 mt-1">10 – 25 personer</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="26-50">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="26-50">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">👫</div>
-            <div class="font-semibold text-turf-900">Afdelingen</div>
+            <div class="font-bold text-charcoal-900">Afdelingen</div>
             <div class="text-sm text-slate-500 mt-1">26 – 50 personer</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="51-120">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="51-120">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🏢</div>
-            <div class="font-semibold text-turf-900">Hele firmaet</div>
+            <div class="font-bold text-charcoal-900">Hele firmaet</div>
             <div class="text-sm text-slate-500 mt-1">51 – 120 personer</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="121-300">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="121-300">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🎪</div>
-            <div class="font-semibold text-turf-900">Den helt store forsamling</div>
+            <div class="font-bold text-charcoal-900">Den helt store forsamling</div>
             <div class="text-sm text-slate-500 mt-1">121 – 300+ personer</div>
           </div>
         </div>
@@ -276,42 +288,42 @@
       <section class="step-section" data-step="3">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Tidspunkt</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Hvornår skal magien ske?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Hvornår skal magien ske?</h2>
           <p class="text-slate-500 mt-2">Hverdag, løbsdag eller weekend — vi har rammerne klar.</p>
         </div>
         <div class="grid gap-4" data-group="single" data-name="tidspunkt">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="hverdag">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="hverdag">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">📅</div>
               <div>
-                <div class="font-semibold text-turf-900">Klassisk hverdag (Man-Tors)</div>
+                <div class="font-bold text-charcoal-900">Klassisk hverdag (Man-Tors)</div>
                 <div class="text-sm text-slate-500 mt-1">Fokus på ro og fordybelse</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="fynsk-fredag">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="fynsk-fredag">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🏁</div>
               <div>
-                <div class="font-semibold text-turf-900">Fynsk Fredag (Løbsdag)</div>
+                <div class="font-bold text-charcoal-900">Fynsk Fredag (Løbsdag)</div>
                 <div class="text-sm text-slate-500 mt-1">Vi vil mærke suset, live-løb og fyraftensstemning!</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="weekend">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="weekend">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🎉</div>
               <div>
-                <div class="font-semibold text-turf-900">Weekend-event</div>
+                <div class="font-bold text-charcoal-900">Weekend-event</div>
                 <div class="text-sm text-slate-500 mt-1">Lørdag/søndag med plads til f.eks. familiedag eller stor aftenfest</div>
               </div>
             </div>
@@ -323,42 +335,42 @@
       <section class="step-section" data-step="4">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Virksomhedskultur</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Hvilken stemning kendetegner jeres virksomhed?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Hvilken stemning kendetegner jeres virksomhed?</h2>
           <p class="text-slate-500 mt-2">Vi læser jeres DNA — og matcher event-formatet.</p>
         </div>
         <div class="grid gap-4" data-group="single" data-name="kultur">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="corporate">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="corporate">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🎩</div>
               <div>
-                <div class="font-semibold text-turf-900">The Corporate Classic</div>
+                <div class="font-bold text-charcoal-900">The Corporate Classic</div>
                 <div class="text-sm text-slate-500 mt-1">Professionelle, struktursøgende, klassiske rammer.</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="konkurrence">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="konkurrence">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🏆</div>
               <div>
-                <div class="font-semibold text-turf-900">Konkurrence-bofællesskabet</div>
+                <div class="font-bold text-charcoal-900">Konkurrence-bofællesskabet</div>
                 <div class="text-sm text-slate-500 mt-1">Elsker interne dyster, highfives og højt energiniveau.</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="kreativ">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="kreativ">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🎨</div>
               <div>
-                <div class="font-semibold text-turf-900">Den kreative flok</div>
+                <div class="font-bold text-charcoal-900">Den kreative flok</div>
                 <div class="text-sm text-slate-500 mt-1">Tænker ud af boksen, uformelle rammer, højt til loftet.</div>
               </div>
             </div>
@@ -370,42 +382,42 @@
       <section class="step-section" data-step="5">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Succeskriterie</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Hvad er succeskriteriet for dagen?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Hvad er succeskriteriet for dagen?</h2>
           <p class="text-slate-500 mt-2">Hvad skal gæsterne sige om dagen — bagefter?</p>
         </div>
         <div class="grid gap-4" data-group="single" data-name="maal">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="mondays-hero">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="mondays-hero">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">💬</div>
               <div>
-                <div class="font-semibold text-turf-900">Mondays Hero</div>
+                <div class="font-bold text-charcoal-900">Mondays Hero</div>
                 <div class="text-sm text-slate-500 mt-1">At medarbejderne taler om det ved kaffemaskinen hele mandag morgen.</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="netvaerk">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="netvaerk">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🤝</div>
               <div>
-                <div class="font-semibold text-turf-900">Netværks-guld</div>
+                <div class="font-bold text-charcoal-900">Netværks-guld</div>
                 <div class="text-sm text-slate-500 mt-1">At vi får rystet nye kolleger sammen eller knyttet bånd til kunder.</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="fokus">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="fokus">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🎯</div>
               <div>
-                <div class="font-semibold text-turf-900">Knivskarpt fokus</div>
+                <div class="font-bold text-charcoal-900">Knivskarpt fokus</div>
                 <div class="text-sm text-slate-500 mt-1">At vi kommer i mål med vores faglige dagsorden uden forstyrrelser.</div>
               </div>
             </div>
@@ -417,40 +429,40 @@
       <section class="step-section" data-step="6">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Forplejning</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Hvad skal der i maven?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Hvad skal der i maven?</h2>
           <p class="text-slate-500 mt-2">Vi går fra fynsk brunsviger til 3-retters menu med panoramaudsigt.</p>
         </div>
         <div class="grid sm:grid-cols-2 gap-4" data-group="single" data-name="mad">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="light">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="light">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">☕</div>
-            <div class="font-semibold text-turf-900">Mødeforplejning 'Light'</div>
+            <div class="font-bold text-charcoal-900">Mødeforplejning 'Light'</div>
             <div class="text-sm text-slate-500 mt-1">Fri kaffe/te, kildevand, fynsk brunsviger og let frokost.</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="tribunebar">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="tribunebar">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🌭</div>
-            <div class="font-semibold text-turf-900">Den uformelle 'Tribunebar'</div>
+            <div class="font-bold text-charcoal-900">Den uformelle 'Tribunebar'</div>
             <div class="text-sm text-slate-500 mt-1">Slider-buffet, streetfood og kolde specialøl.</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="vip">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="vip">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🍷</div>
-            <div class="font-semibold text-turf-900">Den store VIP-buffet</div>
+            <div class="font-bold text-charcoal-900">Den store VIP-buffet</div>
             <div class="text-sm text-slate-500 mt-1">Sæsonens varme/kolde retter, vin, øl og vand ad libitum.</div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="gourmet">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="gourmet">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="text-3xl mb-2">🍽️</div>
-            <div class="font-semibold text-turf-900">Gourmet-oplevelsen</div>
+            <div class="font-bold text-charcoal-900">Gourmet-oplevelsen</div>
             <div class="text-sm text-slate-500 mt-1">Gennemført 3-retters menu serveret ved dugklædte borde med panoramaudsigt.</div>
           </div>
         </div>
@@ -460,42 +472,42 @@
       <section class="step-section" data-step="7">
         <div class="mb-8">
           <div class="badge inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3">Tilvalg</div>
-          <h2 class="font-display text-3xl sm:text-4xl text-turf-900 leading-tight">Skal der en "Væddeløbs-Twist" på?</h2>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 leading-tight">Skal der en "Væddeløbs-Twist" på?</h2>
           <p class="text-slate-500 mt-2">Vælg ét, to eller alle tre — eller spring helt over.</p>
         </div>
         <div class="grid gap-4" data-group="multi" data-name="twist">
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="stald">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="stald">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🐎</div>
               <div>
-                <div class="font-semibold text-turf-900">Stald-insideren</div>
+                <div class="font-bold text-charcoal-900">Stald-insideren</div>
                 <div class="text-sm text-slate-500 mt-1">Guided rundvisning i staldene, mød kuskene og få en spilguide.</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="lysskilt">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="lysskilt">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🏆</div>
               <div>
-                <div class="font-semibold text-turf-900">Firmanavnet i lysskiltet</div>
+                <div class="font-bold text-charcoal-900">Firmanavnet i lysskiltet</div>
                 <div class="text-sm text-slate-500 mt-1">Få opkaldt et officielt løb efter jeres virksomhed inkl. pokaloverrækkelse.</div>
               </div>
             </div>
           </div>
-          <div class="choice-card rounded-2xl p-5 cursor-pointer relative" data-value="sulky">
-            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-turf-700 text-white grid place-items-center">
+          <div class="choice-card rounded-lg p-5 cursor-pointer relative" data-value="sulky">
+            <div class="absolute top-4 right-4 check-mark w-7 h-7 rounded-full bg-wine-600 text-white grid place-items-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="flex items-start gap-4">
               <div class="text-3xl">🏇</div>
               <div>
-                <div class="font-semibold text-turf-900">Direktøren i sulkyen</div>
+                <div class="font-bold text-charcoal-900">Direktøren i sulkyen</div>
                 <div class="text-sm text-slate-500 mt-1">Prøv at køre en ægte travhest i en dobbeltsulky.</div>
               </div>
             </div>
@@ -509,98 +521,124 @@
           <div class="inline-flex items-center gap-2 badge text-xs font-semibold px-3 py-1 rounded-full mb-3">
             <span>✨</span> Din opskrift er klar
           </div>
-          <h2 class="font-display text-3xl sm:text-5xl text-turf-900 leading-tight">Din personlige Event-Opskrift er klar!</h2>
-          <p class="text-slate-500 mt-3 max-w-2xl mx-auto">Baseret på jeres svar har vores eventteam sammensat et forslag, der matcher jeres DNA, jeres mål og jeres ambitionsniveau.</p>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-charcoal-900 leading-tight">Din personlige Event-Opskrift er klar!</h2>
+          <p class="text-slate-600 mt-3 max-w-2xl mx-auto">Baseret på jeres svar har vores eventteam sammensat et forslag, der matcher jeres DNA, jeres mål og jeres ambitionsniveau.</p>
         </div>
 
         <!-- SUMMARY -->
-        <div class="rounded-2xl border border-turf-100 bg-white shadow-card p-6 sm:p-8 mb-8">
-          <div class="flex items-center gap-2 mb-5">
-            <div class="w-8 h-8 rounded-lg bg-turf-700 text-white grid place-items-center">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-            </div>
-            <h3 class="font-display text-2xl text-turf-900">Jeres valg</h3>
+        <div class="rounded-xl border border-slate-200 bg-white shadow-card p-6 sm:p-8 mb-8">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-1 h-7 bg-wine-600 rounded-sm"></div>
+            <h3 class="font-display font-bold text-xl text-charcoal-900">Jeres valg</h3>
           </div>
           <div id="summaryList" class="grid sm:grid-cols-2 gap-3"></div>
         </div>
 
         <!-- EXPERT TIPS -->
         <div class="mb-10">
-          <div class="flex items-center gap-2 mb-5">
-            <div class="w-8 h-8 rounded-lg bg-gold-500 text-white grid place-items-center">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
-            </div>
-            <h3 class="font-display text-2xl text-turf-900">3 ekspertråd — skræddersyet til jer</h3>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-1 h-7 bg-wine-600 rounded-sm"></div>
+            <h3 class="font-display font-bold text-xl text-charcoal-900">3 ekspertråd — skræddersyet til jer</h3>
           </div>
           <div id="tipsList" class="grid gap-4"></div>
         </div>
 
         <!-- LEAD FORM -->
-        <div id="leadFormWrap" class="rounded-3xl bg-turf-900 text-white p-6 sm:p-10 shadow-cardHover relative overflow-hidden">
-          <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-gold-500/15 blur-3xl pointer-events-none"></div>
-          <div class="absolute -bottom-24 -left-16 w-72 h-72 rounded-full bg-turf-500/30 blur-3xl pointer-events-none"></div>
+        <div id="leadFormWrap" class="diagonal-section bg-charcoal-900 text-white p-6 sm:p-10 shadow-cardHover relative overflow-hidden">
           <div class="relative">
-            <div class="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-gold-500/20 text-gold-400 mb-3">SIDSTE TRIN</div>
-            <h3 class="font-display text-2xl sm:text-3xl mb-2">Send mig den fulde Event-Pakke</h3>
-            <p class="text-turf-100/80 mb-6 max-w-xl">Vi sender jeres skræddersyede program som PDF samt et uforpligtende tilbud retur — typisk inden for 4 timer på hverdage.</p>
+            <div class="accent-bar mb-4"></div>
+            <div class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-wine-300 mb-3">SIDSTE TRIN</div>
+            <h3 class="font-display font-bold text-2xl sm:text-3xl mb-2">Send mig den fulde Event-Pakke</h3>
+            <p class="text-slate-300 mb-7 max-w-xl">Vi sender jeres skræddersyede program som PDF samt et uforpligtende tilbud retur — typisk inden for 4 timer på hverdage.</p>
 
             <form id="leadForm" class="grid sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs uppercase tracking-wider text-turf-100/70 mb-1.5">Navn *</label>
-                <input required type="text" name="name" placeholder="Mette Hansen" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-white/40">
+                <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1.5 font-semibold">Navn *</label>
+                <input required type="text" name="name" placeholder="Mette Hansen" class="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/40">
               </div>
               <div>
-                <label class="block text-xs uppercase tracking-wider text-turf-100/70 mb-1.5">Firma *</label>
-                <input required type="text" name="company" placeholder="Hansen & Co. ApS" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-white/40">
+                <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1.5 font-semibold">Firma *</label>
+                <input required type="text" name="company" placeholder="Hansen & Co. ApS" class="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/40">
               </div>
               <div>
-                <label class="block text-xs uppercase tracking-wider text-turf-100/70 mb-1.5">E-mail *</label>
-                <input required type="email" name="email" placeholder="mette@hansenco.dk" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-white/40">
+                <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1.5 font-semibold">E-mail *</label>
+                <input required type="email" name="email" placeholder="mette@hansenco.dk" class="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/40">
               </div>
               <div>
-                <label class="block text-xs uppercase tracking-wider text-turf-100/70 mb-1.5">Telefon *</label>
-                <input required type="tel" name="phone" placeholder="+45 12 34 56 78" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder:text-white/40">
+                <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1.5 font-semibold">Telefon *</label>
+                <input required type="tel" name="phone" placeholder="+45 12 34 56 78" class="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/40">
               </div>
-              <div class="sm:col-span-2 mt-2">
-                <button type="submit" class="w-full bg-gold-500 hover:bg-gold-400 text-turf-950 font-bold text-lg py-4 rounded-2xl shadow-lg transition-all hover:-translate-y-0.5">
+              <div class="sm:col-span-2 mt-3">
+                <button type="submit" class="w-full bg-wine-600 hover:bg-wine-700 text-white font-bold text-lg py-4 rounded-md shadow-lg transition-all">
                   Send min Event-Pakke afsted 🚀
                 </button>
-                <p class="text-xs text-turf-100/60 mt-3 text-center">Vi behandler dine oplysninger fortroligt. Ingen spam — kun jeres event-pakke.</p>
+                <p class="text-xs text-slate-400 mt-3 text-center">Vi behandler dine oplysninger fortroligt. Ingen spam — kun jeres event-pakke.</p>
               </div>
             </form>
           </div>
         </div>
 
         <!-- THANK YOU -->
-        <div id="thankYou" class="hidden text-center py-12 px-6 rounded-3xl bg-gradient-to-br from-turf-50 to-white border border-turf-100 mt-6 shadow-card">
-          <div class="w-20 h-20 rounded-full bg-turf-700 text-white grid place-items-center mx-auto mb-5 shadow-lg">
+        <div id="thankYou" class="hidden text-center py-12 px-6 rounded-xl bg-white border border-wine-100 mt-6 shadow-card">
+          <div class="w-20 h-20 rounded-full bg-wine-600 text-white grid place-items-center mx-auto mb-5 shadow-lg">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
           </div>
-          <h3 class="font-display text-3xl sm:text-4xl text-turf-900 mb-3">Tak for din forespørgsel!</h3>
-          <p class="text-slate-600 max-w-lg mx-auto">Vi har modtaget jeres Event-Opskrift og kontakter <span id="thankYouName" class="font-semibold text-turf-800">jer</span> inden for 4 timer på hverdage med et uforpligtende tilbud og det fulde program som PDF.</p>
-          <div class="track-line w-32 mx-auto my-6"></div>
+          <h3 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 mb-3">Tak for din forespørgsel!</h3>
+          <p class="text-slate-600 max-w-lg mx-auto">Vi har modtaget jeres Event-Opskrift og kontakter <span id="thankYouName" class="font-bold text-wine-700">jer</span> inden for 4 timer på hverdage med et uforpligtende tilbud og det fulde program som PDF.</p>
+          <div class="accent-bar mx-auto my-6"></div>
           <p class="text-sm text-slate-500">Vi glæder os til at høre fra jer på banen 🏇</p>
         </div>
       </section>
 
       <!-- NAVIGATION -->
       <div id="navWrap" class="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
-        <button id="prevBtn" class="btn-ghost flex items-center gap-2 px-5 py-3 rounded-xl font-medium text-slate-600">
+        <button id="prevBtn" class="btn-ghost flex items-center gap-2 px-5 py-3 rounded-md font-semibold text-slate-600">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
           Tilbage
         </button>
         <div id="stepDots" class="hidden sm:flex items-center gap-1.5"></div>
-        <button id="nextBtn" disabled class="btn-primary text-white flex items-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-card">
+        <button id="nextBtn" disabled class="btn-primary text-white flex items-center gap-2 px-7 py-3 rounded-md font-bold shadow-card">
           Næste
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
-
-    <footer class="text-center text-xs text-slate-400 mt-8">
-      © Fyens Væddeløbsbane · Event-konfigurator · Bygget med passion for hestesport
-    </footer>
   </main>
+
+  <!-- FOOTER (matches site) -->
+  <footer class="bg-white border-t border-slate-200 mt-16">
+    <div class="max-w-6xl mx-auto px-6 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+      <div>
+        <div class="font-bold text-wine-600 mb-2">Fyens Væddeløbsbane A/S</div>
+        <div class="text-slate-600 leading-relaxed">
+          Prins Haralds Alle 51 B<br>
+          5250 Odense SV<br>
+          Tlf.: +45 888 112 05
+        </div>
+      </div>
+      <div>
+        <div class="font-bold text-wine-600 mb-2">Konferencer og Firmaevents</div>
+        <div class="text-slate-600 leading-relaxed">
+          Kontaktperson: Eventteam<br>
+          Tlf.: +45 24 85 97 02<br>
+          info@fyensvaeddeloebsbane.dk
+        </div>
+      </div>
+      <div>
+        <div class="font-bold text-wine-600 mb-2">Information</div>
+        <div class="text-slate-600 leading-relaxed">
+          Om Fyens Væddeløbsbane<br>
+          Lokaler og kapacitet<br>
+          Bliv eventpartner
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-slate-100">
+      <div class="max-w-6xl mx-auto px-6 py-4 text-xs text-slate-400">
+        © Fyens Væddeløbsbane 2026 · Event-konfigurator
+      </div>
+    </div>
+  </footer>
 
   <script>
     // ===== STATE =====
@@ -718,9 +756,9 @@
         const s = parseInt(d.dataset.step);
         d.className = 'rounded-full transition-all ' +
           (s === currentStep
-            ? 'w-6 h-2 bg-turf-700'
+            ? 'w-6 h-2 bg-wine-600'
             : s < currentStep
-              ? 'w-2 h-2 bg-turf-400'
+              ? 'w-2 h-2 bg-wine-300'
               : 'w-2 h-2 bg-slate-200');
       });
 
@@ -942,10 +980,10 @@
         const item = document.createElement('div');
         item.className = 'flex items-start gap-3 p-3 rounded-xl bg-slate-50';
         item.innerHTML = `
-          <div class="w-2 h-2 mt-2 rounded-full bg-turf-500 flex-shrink-0"></div>
+          <div class="w-2 h-2 mt-2 rounded-full bg-wine-600 flex-shrink-0"></div>
           <div class="min-w-0">
-            <div class="text-xs uppercase tracking-wider text-slate-500">${label}</div>
-            <div class="font-medium text-turf-900 truncate">${value}</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500 font-semibold">${label}</div>
+            <div class="font-semibold text-charcoal-900 truncate">${value}</div>
           </div>
         `;
         summary.appendChild(item);
@@ -955,15 +993,15 @@
       tipsList.innerHTML = '';
       generateTips().forEach((tip, i) => {
         const card = document.createElement('div');
-        card.className = 'tip-card rounded-2xl p-5 sm:p-6 shadow-card';
+        card.className = 'tip-card rounded-lg p-5 sm:p-6 shadow-card';
         card.innerHTML = `
           <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-white grid place-items-center text-2xl shadow-card border border-turf-100">
+            <div class="flex-shrink-0 w-12 h-12 rounded-md bg-wine-50 grid place-items-center text-2xl border border-wine-100">
               ${tip.icon}
             </div>
             <div class="flex-1 min-w-0">
-              <div class="text-xs uppercase tracking-wider text-gold-600 font-semibold mb-1">Tip ${i + 1}</div>
-              <h4 class="font-display text-xl text-turf-900 leading-snug mb-2">${tip.title}</h4>
+              <div class="text-[11px] uppercase tracking-[0.18em] text-wine-600 font-bold mb-1">Tip ${i + 1}</div>
+              <h4 class="font-display font-bold text-lg text-charcoal-900 leading-snug mb-2">${tip.title}</h4>
               <p class="text-slate-600 text-sm leading-relaxed">${tip.body}</p>
             </div>
           </div>
