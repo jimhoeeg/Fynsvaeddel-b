@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Fyens Væddeløbsbane">
+  <!-- Outer wine red circle -->
+  <circle cx="100" cy="100" r="100" fill="#9b2342"/>
+
+  <!-- Thin white inner border ring -->
+  <circle cx="100" cy="100" r="93" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+
+  <!-- Hidden arcs for curved text -->
+  <defs>
+    <path id="topArc" d="M 24 100 A 76 76 0 0 1 176 100" fill="none"/>
+    <path id="botArc" d="M 28 108 A 72 72 0 0 0 172 108" fill="none"/>
+  </defs>
+
+  <text fill="#ffffff" font-family="'Open Sans', Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="4">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">FYENS</textPath>
+  </text>
+
+  <text fill="#ffffff" font-family="'Open Sans', Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="2">
+    <textPath href="#botArc" startOffset="50%" text-anchor="middle">VÆDDELØBSBANE</textPath>
+  </text>
+
+  <!-- Decorative side dots -->
+  <circle cx="14" cy="100" r="2.5" fill="#ffffff"/>
+  <circle cx="186" cy="100" r="2.5" fill="#ffffff"/>
+
+  <!-- Inner white field -->
+  <circle cx="100" cy="100" r="58" fill="#ffffff"/>
+
+  <!-- Stylized horse head silhouette (left-facing) -->
+  <g fill="#9b2342">
+    <path d="
+      M 72 145
+      C 62 140, 56 128, 55 114
+      C 54 102, 56 90, 62 80
+      C 67 72, 74 67, 82 65
+      C 88 64, 94 65, 98 68
+      L 108 56
+      C 114 50, 122 50, 126 56
+      C 130 62, 130 70, 127 78
+      L 122 92
+      C 120 98, 117 102, 113 105
+      C 124 108, 134 116, 140 128
+      C 145 138, 145 148, 138 153
+      L 132 156
+      C 128 156, 124 152, 122 146
+      L 118 138
+      C 108 142, 96 144, 84 145
+      C 80 145, 76 145, 72 145 Z
+    "/>
+    <!-- Mane peaks above the head -->
+    <path d="
+      M 98 68
+      L 102 60
+      L 108 64
+      L 113 54
+      L 119 60
+      L 122 50
+      L 127 56
+      C 124 54, 119 53, 114 56
+      C 110 58, 106 62, 104 65
+      Z
+    "/>
+    <!-- Eye highlight -->
+    <circle cx="92" cy="92" r="2.5" fill="#ffffff"/>
+  </g>
+</svg>
