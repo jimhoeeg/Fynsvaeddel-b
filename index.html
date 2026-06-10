@@ -526,7 +526,7 @@
         </div>
 
         <!-- SUMMARY -->
-        <div class="rounded-xl border border-slate-200 bg-white shadow-card p-6 sm:p-8 mb-8">
+        <div class="rounded-xl border border-slate-200 bg-white shadow-card p-6 sm:p-8 mb-6">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-1 h-7 bg-wine-600 rounded-sm"></div>
             <h3 class="font-display font-bold text-xl text-charcoal-900">Jeres valg</h3>
@@ -534,13 +534,84 @@
           <div id="summaryList" class="grid sm:grid-cols-2 gap-3"></div>
         </div>
 
+        <!-- PRICE ESTIMATE -->
+        <div class="rounded-xl bg-gradient-to-br from-wine-50 via-white to-white border border-wine-100 shadow-card p-6 sm:p-8 mb-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-40 h-40 bg-wine-100/40 rounded-full -translate-y-12 translate-x-12 blur-2xl pointer-events-none"></div>
+          <div class="relative">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-1 h-7 bg-wine-600 rounded-sm"></div>
+              <h3 class="font-display font-bold text-xl text-charcoal-900">Vejledende prisestimat</h3>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-6 items-center">
+              <div>
+                <div class="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-1">Pr. kuvert · ekskl. moms</div>
+                <div class="font-display font-bold text-4xl sm:text-5xl text-wine-700 leading-none">
+                  <span id="priceLow">—</span> <span class="text-2xl text-slate-400 font-normal">–</span> <span id="priceHigh">—</span>
+                  <span class="text-lg text-slate-500 font-medium ml-1">kr.</span>
+                </div>
+                <div class="text-sm text-slate-600 mt-2">Anslået samlet for jeres event: <span id="priceTotal" class="font-semibold text-charcoal-900">—</span></div>
+              </div>
+              <div class="bg-white/70 rounded-lg p-4 border border-wine-100 text-sm text-slate-600 leading-relaxed">
+                <div class="font-semibold text-charcoal-900 mb-1">📋 Få det specificerede tilbud</div>
+                Det endelige tilbud baseres på dato, antal og endeligt program. Send forespørgslen nedenfor — så modtager I et detaljeret tilbud med fuld specifikation pr. mail.
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- EXPERT TIPS -->
-        <div class="mb-10">
+        <div class="mb-8">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-1 h-7 bg-wine-600 rounded-sm"></div>
-            <h3 class="font-display font-bold text-xl text-charcoal-900">3 ekspertråd — skræddersyet til jer</h3>
+            <h3 class="font-display font-bold text-xl text-charcoal-900"><span id="tipsCount">5</span> ekspertråd — skræddersyet til jer</h3>
           </div>
           <div id="tipsList" class="grid gap-4"></div>
+        </div>
+
+        <!-- DID YOU KNOW — venue facts -->
+        <div class="mb-8">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-1 h-7 bg-wine-600 rounded-sm"></div>
+            <h3 class="font-display font-bold text-xl text-charcoal-900">Vidste I, at I også kan…</h3>
+          </div>
+          <div id="factsList" class="grid sm:grid-cols-2 gap-4"></div>
+        </div>
+
+        <!-- SPONSOR NETWORK PROMO -->
+        <div class="rounded-xl bg-charcoal-900 text-white p-6 sm:p-8 mb-8 relative overflow-hidden">
+          <div class="absolute -top-16 -right-16 w-56 h-56 bg-wine-600/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative">
+            <div class="accent-bar mb-4"></div>
+            <div class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-wine-300 mb-2">FVB SPONSORNETVÆRK</div>
+            <h3 class="font-display font-bold text-2xl sm:text-3xl mb-3">Sæt flere hestekræfter på virksomheden</h3>
+            <p class="text-slate-300 mb-6 max-w-2xl leading-relaxed">
+              Over <strong class="text-white">100 fynske virksomheder</strong> er allerede med i FVB Sponsornetværket — og der er stadig plads til flere. Det er Fyns mest aktive B2B-netværk for ejere, direktører og beslutningstagere, der vil knytte stærke relationer i uformelle rammer.
+            </p>
+            <div class="grid sm:grid-cols-3 gap-4 mb-6">
+              <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div class="text-2xl mb-2">🤝</div>
+                <div class="font-bold text-white mb-1">Stærke relationer</div>
+                <div class="text-sm text-slate-300">8-10 årlige netværksarrangementer med beslutningstagere fra hele Fyn.</div>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div class="text-2xl mb-2">📣</div>
+                <div class="font-bold text-white mb-1">Brand-eksponering</div>
+                <div class="text-sm text-slate-300">Jeres logo synligt på banen, i programmer og digital eksponering hele året.</div>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div class="text-2xl mb-2">🎟️</div>
+                <div class="font-bold text-white mb-1">VIP-oplevelser</div>
+                <div class="text-sm text-slate-300">Adgang til lukkede løbsdage, eget bord i loungen og dedikerede tilbud til kunder.</div>
+              </div>
+            </div>
+            <div class="bg-wine-600/15 border border-wine-600/30 rounded-lg p-4 flex items-start gap-3">
+              <div class="text-2xl">⚡</div>
+              <div>
+                <div class="font-bold text-white mb-1">Og det er nemt at komme med</div>
+                <div class="text-sm text-slate-300">Sæt et flueben i formularen nedenfor — så ringer Jan Arentoft fra netværket og fortæller om mulighederne. Ingen binding, ingen forpligtelser, bare en uforpligtende snak.</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- LEAD FORM -->
@@ -549,7 +620,7 @@
             <div class="accent-bar mb-4"></div>
             <div class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-wine-300 mb-3">SIDSTE TRIN</div>
             <h3 class="font-display font-bold text-2xl sm:text-3xl mb-2">Send mig den fulde Event-Pakke</h3>
-            <p class="text-slate-300 mb-7 max-w-xl">Vi sender jeres skræddersyede program som PDF samt et uforpligtende tilbud retur — typisk inden for 4 timer på hverdage.</p>
+            <p class="text-slate-300 mb-7 max-w-xl">Vi sender jeres skræddersyede program som PDF, det specificerede tilbud med priser samt et uforpligtende oplæg — typisk inden for 4 timer på hverdage.</p>
 
             <form id="leadForm" class="grid sm:grid-cols-2 gap-4">
               <div>
@@ -568,6 +639,24 @@
                 <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1.5 font-semibold">Telefon *</label>
                 <input required type="tel" name="phone" placeholder="+45 12 34 56 78" class="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/40">
               </div>
+
+              <div class="sm:col-span-2 space-y-3 mt-2">
+                <label class="flex items-start gap-3 p-4 rounded-md bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                  <input type="checkbox" name="wantPriceDetails" checked class="mt-1 w-5 h-5 accent-wine-600 cursor-pointer">
+                  <div>
+                    <div class="font-semibold text-white">Send mig det specificerede prisoverslag pr. mail</div>
+                    <div class="text-xs text-slate-400 mt-0.5">Inkl. fuld linje-specifikation af forplejning, lokaleleje og tilvalg.</div>
+                  </div>
+                </label>
+                <label class="flex items-start gap-3 p-4 rounded-md bg-wine-600/10 border border-wine-600/30 cursor-pointer hover:bg-wine-600/20 transition-colors">
+                  <input type="checkbox" name="wantSponsorInfo" class="mt-1 w-5 h-5 accent-wine-600 cursor-pointer">
+                  <div>
+                    <div class="font-semibold text-white">Ja tak — fortæl mig mere om FVB Sponsornetværket</div>
+                    <div class="text-xs text-slate-300 mt-0.5">Jan Arentoft ringer for en uforpligtende snak om netværket. Ingen binding.</div>
+                  </div>
+                </label>
+              </div>
+
               <div class="sm:col-span-2 mt-3">
                 <button type="submit" class="w-full bg-wine-600 hover:bg-wine-700 text-white font-bold text-lg py-4 rounded-md shadow-lg transition-all">
                   Send min Event-Pakke afsted 🚀
@@ -584,7 +673,10 @@
             <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
           </div>
           <h3 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900 mb-3">Tak for din forespørgsel!</h3>
-          <p class="text-slate-600 max-w-lg mx-auto">Vi har modtaget jeres Event-Opskrift og kontakter <span id="thankYouName" class="font-bold text-wine-700">jer</span> inden for 4 timer på hverdage med et uforpligtende tilbud og det fulde program som PDF.</p>
+          <p class="text-slate-600 max-w-lg mx-auto">Vi har modtaget jeres Event-Opskrift og kontakter <span id="thankYouName" class="font-bold text-wine-700">jer</span> inden for 4 timer på hverdage med det fulde program, det specificerede tilbud og priser pr. mail.</p>
+          <div id="thankYouSponsor" class="hidden mt-5 mx-auto max-w-md text-sm bg-wine-50 border border-wine-100 rounded-md p-4 text-slate-700">
+            <strong class="text-wine-700">Bonus:</strong> Jan Arentoft fra FVB Sponsornetværket ringer også for en uforpligtende snak om netværket.
+          </div>
           <div class="accent-bar mx-auto my-6"></div>
           <p class="text-sm text-slate-500">Vi glæder os til at høre fra jer på banen 🏇</p>
         </div>
@@ -956,7 +1048,175 @@
         });
       }
 
-      return tips.slice(0, 3);
+      // Tip 4 — driven by food choice (mad)
+      if (answers.mad === 'gourmet') {
+        tips.push({
+          icon: '🍷',
+          title: 'Match vinen med løbenes tempo',
+          body: 'Vores køkken kan bygge et vinflight ud fra menuens 3 retter — bed sommelieren om at servere den kraftigste vin lige før det største løb på dagen. Den fælles "skål" rammer alle på samme tid, og stemningen topper, når storskærmen tæller ned.'
+        });
+      } else if (answers.mad === 'vip') {
+        tips.push({
+          icon: '🍤',
+          title: 'Tilkøb levende anretterstation',
+          body: 'Vores VIP-buffet kan opgraderes med en kok ved buffeten, der anretter f.eks. friskskårne tatar, fynsk røget laks eller flamberede desserter. Lille investering, stor wow-effekt — og gæsterne får noget at tale om mens de står i kø.'
+        });
+      } else if (answers.mad === 'tribunebar') {
+        tips.push({
+          icon: '🍔',
+          title: 'Specialøl-tasting med vores bryggeri-partner',
+          body: 'Vi har lokale fynske mikrobryggerier som faste partnere. Bestil en 20-minutters tasting før hovedretten — fire forskellige øl, kort intro fra brygmester, og I har en oplevelse, der typisk ville koste 4× så meget på et bryggeri.'
+        });
+      } else {
+        tips.push({
+          icon: '☕',
+          title: 'Fynsk brunsviger som ankomst-statement',
+          body: 'Vores køkken bager friskbagt fynsk brunsviger hver morgen. Lad den stå klar når gæsterne kommer — duften alene sætter en helt anden stemning end standard-kaffeforplejning, og det koster ingenting ekstra.'
+        });
+      }
+
+      // Tip 5 — driven by guest count (gæster)
+      if (answers.gaester === '121-300') {
+        tips.push({
+          icon: '🅿️',
+          title: 'Sæt shuttlebus op fra centrum',
+          body: 'Med 120+ gæster bliver parkering og taxa-jagt en stopklods. Vi kan arrangere shuttlebus til/fra Odense banegård eller centrum hver 20. minut — koster typisk 4-5.000 kr. total, men sparer jeres gæster for besvær og åbner for at servere drikkevarer trygt hele aftenen.'
+        });
+      } else if (answers.gaester === '51-120') {
+        tips.push({
+          icon: '🎤',
+          title: 'Brug vores fastinstallerede AV-anlæg',
+          body: 'Vores Festsal har scene, projektor og lyd-anlæg integreret — perfekt til speeches og prisuddelinger til 50-120 gæster. Spar leje af eksternt udstyr (typisk 8-12.000 kr.) ved at briefe vores tekniker om jeres program i forvejen.'
+        });
+      } else if (answers.gaester === '26-50') {
+        tips.push({
+          icon: '🏛️',
+          title: 'Direktørloungen til pre-event briefing',
+          body: 'Inden gæsterne ankommer kan I bruge Direktørloungen 30 min. som "command center" — gennemgå program med jeres team, varm op til værtsrollen, og kom rolige og forberedte ned i festsalen. Inkluderet ved booking af festsal til 26+ pers.'
+        });
+      } else {
+        tips.push({
+          icon: '👔',
+          title: 'Lej hele Direktørloungen eksklusivt',
+          body: 'Med 10-25 personer kan I lukke jer inde i vores eksklusive Direktørlounge — egen indgang, panoramaudsigt og dedikeret tjener gennem hele eventet. Det er det tætteste, I kommer på "privatfest" på banen, til en overskuelig pris.'
+        });
+      }
+
+      return tips.slice(0, 5);
+    }
+
+    // ===== VENUE FACTS — surface possibilities at the track =====
+    function generateFacts() {
+      // Pool of "did you know" facts — independent of answers, mixed to show breadth
+      const allFacts = [
+        { icon: '🏛️', title: 'Holde generalforsamling med 250 stemmeberettigede',
+          body: 'Vores Festsal er godkendt til generalforsamlinger med over 250 deltagere — inkl. afstemningsudstyr, scene og talerstol.' },
+        { icon: '🎬', title: 'Streame jeres event live',
+          body: 'Vi har fastinstallerede multikameraer på banen — kan kobles på, så I sender jeres event live til kollegaer eller kunder, der ikke kunne nå frem.' },
+        { icon: '🌅', title: 'Holde sommerfest udendørs på paddocken',
+          body: 'I sommerhalvåret kan I leje paddocken til udendørs reception — med teltløsning, grillstationer og banen som baggrund for taler.' },
+        { icon: '🎄', title: 'Holde julefrokost helt op til 24. december',
+          body: 'Vi har juledekoreret festsal klar fra midt i november — også populært til kunde-julefrokoster i de stille uger op til jul.' },
+        { icon: '🎓', title: 'Køre flere parallelle workshops',
+          body: 'Vi har 4 separate mødelokaler i forskellige størrelser — perfekt til konference-formater hvor I splitter op i breakouts og samler i festsalen.' },
+        { icon: '🤝', title: 'Kombinere kundearrangement og medarbejderfest',
+          body: 'Mange firmaer holder kundeevent kl. 14-18 og medarbejderfest kl. 19-01 samme dag — vi kører setup-skiftet, mens jeres gæster nyder en pause i loungen.' },
+        { icon: '🐎', title: 'Få en travhest opkaldt efter jeres firma',
+          body: 'Ikke kun et løb — I kan også sponsere en konkret hest, der løber i jeres firmafarver hele sæsonen. Genialt content til SoMe og kunde-storytelling.' },
+        { icon: '📚', title: 'Bruge banen som case i ledertræning',
+          body: 'Vores trænere og kuske holder oplæg om risikoledelse, teamarbejde og præstation under pres — koblet til jeres lederudviklingsforløb.' },
+        { icon: '🎁', title: 'Give væddeløbsbilletter som julegave',
+          body: 'Vi laver firma-gavepakker med VIP-billet, middag og bordreservation. Populært alternativ til de klassiske vingaver til medarbejdere eller kunder.' },
+        { icon: '📺', title: 'Hyre vores løbskommentator som event-vært',
+          body: 'Vores professionelle løbskommentator kan booke som vært for jeres aften — entusiastisk, rutineret med scene, og kender stedet som sin egen baghave.' }
+      ];
+
+      // Light personalization — push relevant facts up
+      const prioritized = [...allFacts];
+      if (answers.anledning === 'fejring') {
+        prioritized.unshift(allFacts.find(f => f.title.includes('julefrokost')));
+      }
+      if (answers.maal === 'netvaerk') {
+        prioritized.unshift(allFacts.find(f => f.title.includes('kundearrangement')));
+      }
+      if (answers.kultur === 'konkurrence') {
+        prioritized.unshift(allFacts.find(f => f.title.includes('ledertræning')));
+      }
+      if (answers.gaester === '121-300') {
+        prioritized.unshift(allFacts.find(f => f.title.includes('generalforsamling')));
+      }
+
+      // Dedupe and take 4
+      const seen = new Set();
+      const out = [];
+      for (const f of prioritized) {
+        if (!f || seen.has(f.title)) continue;
+        seen.add(f.title);
+        out.push(f);
+        if (out.length === 4) break;
+      }
+      return out;
+    }
+
+    // ===== PRICE ESTIMATE LOGIC =====
+    function calculatePrice() {
+      // Base price per kuvert (DKK ex moms) by food choice
+      const basePrice = {
+        'light':      295,
+        'tribunebar': 525,
+        'vip':        795,
+        'gourmet':    1195
+      }[answers.mad] || 525;
+
+      // Occasion modifier
+      const occasionMod = {
+        'faglig':       100, // lokale + AV
+        'fredagsbar':   150,
+        'fejring':      275,
+        'teambuilding': 200
+      }[answers.anledning] || 0;
+
+      // Timing modifier
+      const timingMod = {
+        'hverdag':       0,
+        'fynsk-fredag':  100,
+        'weekend':       175
+      }[answers.tidspunkt] || 0;
+
+      // Volume discount/surcharge
+      const volumeMod = {
+        '10-25':    75,
+        '26-50':    0,
+        '51-120':  -50,
+        '121-300': -100
+      }[answers.gaester] || 0;
+
+      // Twist add-ons (per person)
+      const twistMod = (answers.twist || []).reduce((sum, t) => {
+        return sum + ({ 'stald': 95, 'lysskilt': 175, 'sulky': 295 }[t] || 0);
+      }, 0);
+
+      const mid = basePrice + occasionMod + timingMod + volumeMod + twistMod;
+      // ±8% range to signal estimate
+      const low  = Math.round((mid * 0.92) / 25) * 25;
+      const high = Math.round((mid * 1.08) / 25) * 25;
+
+      // Representative guest count for total estimate
+      const guestMidpoint = {
+        '10-25':   18,
+        '26-50':   38,
+        '51-120':  85,
+        '121-300': 180
+      }[answers.gaester] || 30;
+
+      const totalLow  = low  * guestMidpoint;
+      const totalHigh = high * guestMidpoint;
+
+      return { low, high, totalLow, totalHigh, guests: guestMidpoint };
+    }
+
+    function formatDKK(n) {
+      return n.toLocaleString('da-DK');
     }
 
     // ===== BUILD RESULTS =====
@@ -989,9 +1249,19 @@
         summary.appendChild(item);
       });
 
+      // PRICE
+      const price = calculatePrice();
+      document.getElementById('priceLow').textContent  = formatDKK(price.low);
+      document.getElementById('priceHigh').textContent = formatDKK(price.high);
+      document.getElementById('priceTotal').textContent =
+        formatDKK(price.totalLow) + ' – ' + formatDKK(price.totalHigh) + ' kr. (ved ca. ' + price.guests + ' gæster)';
+
+      // TIPS
+      const tips = generateTips();
+      document.getElementById('tipsCount').textContent = tips.length;
       const tipsList = document.getElementById('tipsList');
       tipsList.innerHTML = '';
-      generateTips().forEach((tip, i) => {
+      tips.forEach((tip, i) => {
         const card = document.createElement('div');
         card.className = 'tip-card rounded-lg p-5 sm:p-6 shadow-card';
         card.innerHTML = `
@@ -1008,6 +1278,25 @@
         `;
         tipsList.appendChild(card);
       });
+
+      // FACTS — "Vidste I, at I også kan..."
+      const facts = generateFacts();
+      const factsList = document.getElementById('factsList');
+      factsList.innerHTML = '';
+      facts.forEach(fact => {
+        const item = document.createElement('div');
+        item.className = 'rounded-lg p-4 sm:p-5 bg-white border border-slate-200 shadow-card hover:border-wine-300 transition-colors';
+        item.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="text-2xl flex-shrink-0">${fact.icon}</div>
+            <div class="min-w-0">
+              <div class="font-semibold text-charcoal-900 leading-snug mb-1">${fact.title}</div>
+              <div class="text-sm text-slate-600 leading-relaxed">${fact.body}</div>
+            </div>
+          </div>
+        `;
+        factsList.appendChild(item);
+      });
     }
 
     // ===== LEAD FORM =====
@@ -1015,10 +1304,12 @@
       e.preventDefault();
       const data = new FormData(e.target);
       const name = data.get('name');
+      const wantsSponsor = data.get('wantSponsorInfo') === 'on';
 
       document.getElementById('leadFormWrap').style.display = 'none';
       const thanks = document.getElementById('thankYou');
       document.getElementById('thankYouName').textContent = name.split(' ')[0];
+      document.getElementById('thankYouSponsor').classList.toggle('hidden', !wantsSponsor);
       thanks.classList.remove('hidden');
       thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
