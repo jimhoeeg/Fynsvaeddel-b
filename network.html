@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Den Digitale Paddock | Fyens Væddeløbsbane</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'display': ['"Open Sans"', 'sans-serif'],
+            'sans': ['"Open Sans"', 'sans-serif'],
+          },
+          colors: {
+            'wine': {
+              50:  '#fbf2f5',
+              100: '#f6e2e8',
+              200: '#edc1cd',
+              300: '#df95aa',
+              400: '#cc657f',
+              500: '#b8425e',
+              600: '#9b2342',
+              700: '#811b37',
+              800: '#6a1830',
+              900: '#3a0d1a',
+              950: '#22070f',
+            },
+            'charcoal': {
+              700: '#3a3a3a',
+              800: '#2a2a2a',
+              900: '#1f1f1f',
+            }
+          },
+          boxShadow: {
+            'card':     '0 4px 14px -2px rgba(58, 13, 26, 0.08)',
+            'cardHover':'0 12px 32px -8px rgba(58, 13, 26, 0.22)',
+            'glow':     '0 0 0 4px rgba(155, 35, 66, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: 'Open Sans', sans-serif;
+      color: #2a2a2a;
+    }
+    .accent-bar { background: #9b2342; height: 4px; width: 56px; border-radius: 2px; }
+    .nav-active { border-bottom: 3px solid #9b2342; padding-bottom: 4px; }
+    .diagonal-section { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 32px), 0 100%); }
+
+    /* Buttons */
+    .btn-primary { background: #9b2342; color: #fff; transition: all .2s ease; }
+    .btn-primary:hover { background: #811b37; box-shadow: 0 8px 20px -8px rgba(155, 35, 66, 0.55); }
+    .btn-primary:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+    .btn-outline { border: 1.5px solid #e2e8f0; color: #3a3a3a; background: #fff; transition: all .2s ease; }
+    .btn-outline:hover { border-color: #9b2342; color: #9b2342; }
+
+    /* Filter chips */
+    .chip {
+      transition: all .18s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .chip:hover {
+      border-color: #df95aa;
+      color: #9b2342;
+    }
+    .chip.active {
+      background: #9b2342;
+      color: #fff;
+      border-color: #9b2342;
+      box-shadow: 0 6px 14px -6px rgba(155, 35, 66, 0.6);
+    }
+
+    /* Roulette */
+    .roulette-card {
+      background: linear-gradient(160deg, #1f1f1f 0%, #3a0d1a 60%, #6a1830 100%);
+      border-radius: 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .roulette-card::before {
+      content: '';
+      position: absolute;
+      top: -40%; left: -20%;
+      width: 60%; height: 80%;
+      background: radial-gradient(circle, rgba(155,35,66,0.5) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .roulette-btn {
+      background: linear-gradient(135deg, #9b2342 0%, #cc657f 100%);
+      transition: all .2s ease;
+      box-shadow: 0 10px 24px -10px rgba(204, 101, 127, 0.7);
+    }
+    .roulette-btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -10px rgba(204, 101, 127, 0.9); }
+    .roulette-btn:disabled { cursor: not-allowed; opacity: 0.6; transform: none; }
+
+    @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+    .spin { animation: spin 1s linear infinite; }
+
+    @keyframes shuffleFlip {
+      0% { transform: translateY(0) rotateX(0); opacity: 1; }
+      50% { transform: translateY(-8px) rotateX(60deg); opacity: 0.3; }
+      100% { transform: translateY(0) rotateX(0); opacity: 1; }
+    }
+    .shuffle-anim { animation: shuffleFlip .25s ease infinite; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp .4s ease both; }
+
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(.92); }
+      60%  { opacity: 1; transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .pop-in { animation: popIn .35s cubic-bezier(.34, 1.56, .64, 1) both; }
+
+    /* Avatars (initials) */
+    .avatar {
+      background: linear-gradient(135deg, #9b2342 0%, #6a1830 100%);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .avatar.alt-1 { background: linear-gradient(135deg, #1f1f1f 0%, #3a3a3a 100%); }
+    .avatar.alt-2 { background: linear-gradient(135deg, #cc657f 0%, #9b2342 100%); }
+    .avatar.alt-3 { background: linear-gradient(135deg, #6a1830 0%, #1f1f1f 100%); }
+    .avatar.alt-4 { background: linear-gradient(135deg, #b8425e 0%, #6a1830 100%); }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(15, 15, 15, 0.55);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 460px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: 0 30px 80px -20px rgba(0,0,0,0.5);
+    }
+
+    /* Attendee row hover */
+    .attendee-row {
+      transition: all .15s ease;
+    }
+    .attendee-row:hover {
+      border-color: #df95aa;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px -8px rgba(58, 13, 26, 0.18);
+    }
+
+    /* Lucide icon sizing */
+    [data-lucide] { width: 1em; height: 1em; }
+
+    /* Sticky sidebar offset */
+    @media (min-width: 1024px) {
+      .sticky-sidebar { position: sticky; top: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="border-b border-slate-200 bg-white sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="assets/logo.svg" alt="Fyens Væddeløbsbane" class="w-12 h-12 rounded-full" />
+        <div>
+          <div class="text-[11px] uppercase tracking-[0.2em] text-wine-600 font-bold">Fyens Væddeløbsbane</div>
+          <div class="font-display text-base font-bold text-charcoal-900 tracking-tight">B2B Platform</div>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+        <a href="index.html" class="text-charcoal-700 hover:text-wine-600 transition-colors">Event Konfigurator</a>
+        <a href="network.html" class="nav-active text-wine-600">Den Digitale Paddock</a>
+        <span class="text-slate-300">·</span>
+        <a href="#" class="text-charcoal-700 hover:text-wine-600 transition-colors">Kontakt</a>
+      </nav>
+      <button class="btn-primary px-4 py-2 rounded-md text-sm font-semibold inline-flex items-center gap-2">
+        <i data-lucide="log-in"></i> Log ind
+      </button>
+    </div>
+    <!-- Mobile nav -->
+    <div class="md:hidden border-t border-slate-100 bg-white">
+      <div class="max-w-6xl mx-auto px-6 py-2 flex gap-4 text-sm font-semibold overflow-x-auto">
+        <a href="index.html" class="py-2 text-charcoal-700 whitespace-nowrap">Event Konfigurator</a>
+        <a href="network.html" class="py-2 nav-active text-wine-600 whitespace-nowrap">Den Digitale Paddock</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="bg-charcoal-900 text-white relative overflow-hidden">
+    <div class="absolute -top-20 right-10 w-72 h-72 bg-wine-600/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="max-w-6xl mx-auto px-6 py-12 sm:py-14 relative">
+      <div class="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-wine-300 font-bold mb-3">
+        <i data-lucide="zap"></i> NYHED · B2B Netværk
+      </div>
+      <h1 class="font-display font-bold text-3xl sm:text-5xl leading-tight mb-3">
+        Den Digitale Paddock
+      </h1>
+      <p class="text-slate-300 text-lg max-w-2xl leading-relaxed">
+        Mød Fyns mest aktive B2B-netværk på banen. Find virksomheder, book møder i pausen, og lad rouletten parre dig med din næste partner.
+      </p>
+      <div class="flex flex-wrap gap-4 mt-6 text-sm">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i data-lucide="users" class="text-wine-300"></i> <span id="statCompanies">—</span> virksomheder i netværket
+        </div>
+        <div class="flex items-center gap-2 text-slate-300">
+          <i data-lucide="calendar" class="text-wine-300"></i> Næste løb: <strong class="text-white">18. september</strong>
+        </div>
+        <div class="flex items-center gap-2 text-slate-300">
+          <i data-lucide="handshake" class="text-wine-300"></i> 240+ møder booket i 2026
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="max-w-6xl mx-auto px-6 py-10">
+
+    <div class="grid lg:grid-cols-3 gap-8">
+
+      <!-- LEFT COLUMN -->
+      <div class="lg:col-span-2 space-y-12">
+
+        <!-- HVEM ER PÅ BANEN -->
+        <section id="whoSection">
+          <div class="flex items-end justify-between mb-2 gap-3 flex-wrap">
+            <div>
+              <div class="accent-bar mb-3"></div>
+              <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900">Hvem er på banen?</h2>
+              <p class="text-slate-500 text-sm mt-1">Deltagere til <strong class="text-charcoal-900">Fredagsløb & Netværk</strong> · 18. september · kl. 18:00</p>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <i data-lucide="check-circle-2" class="text-wine-600"></i>
+              <span><span id="attendeeCount">—</span> tilmeldte</span>
+            </div>
+          </div>
+
+          <!-- Search + filter -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-card mt-5">
+            <div class="relative mb-4">
+              <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input id="attendeeSearch" type="text" placeholder="Søg på virksomhed, kontaktperson eller branche..."
+                     class="w-full pl-10 pr-4 py-3 rounded-md border border-slate-200 focus:outline-none focus:border-wine-600 focus:ring-2 focus:ring-wine-100 text-sm">
+            </div>
+            <div class="flex flex-wrap gap-2" id="filterChips">
+              <!-- Chips injected by JS -->
+            </div>
+          </div>
+
+          <!-- Attendee list -->
+          <div id="attendeeList" class="mt-5 space-y-3"></div>
+          <div id="attendeeEmpty" class="hidden text-center py-10 text-sm text-slate-500">
+            Ingen deltagere matcher dit søgekriterium.
+          </div>
+        </section>
+
+        <!-- STALDEN -->
+        <section id="staldenSection">
+          <div class="flex items-end justify-between mb-2 gap-3 flex-wrap">
+            <div>
+              <div class="accent-bar mb-3"></div>
+              <h2 class="font-display font-bold text-2xl sm:text-3xl text-charcoal-900">Stalden</h2>
+              <p class="text-slate-500 text-sm mt-1">Den digitale markedsplads — find samarbejdspartnere, leverandører og kunder.</p>
+            </div>
+            <button class="text-sm font-semibold text-wine-600 hover:text-wine-700 inline-flex items-center gap-1">
+              Se alle virksomheder <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+
+          <div id="staldenGrid" class="mt-5 grid sm:grid-cols-2 gap-5"></div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN — STICKY ROULETTE -->
+      <aside class="lg:col-span-1">
+        <div class="sticky-sidebar space-y-6">
+
+          <!-- ROULETTE WIDGET -->
+          <div class="roulette-card p-6 sm:p-7">
+            <div class="relative">
+              <div class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-wine-200 font-bold mb-3">
+                <i data-lucide="sparkles"></i> SPONTAN-MØDE
+              </div>
+              <h3 class="font-display font-bold text-2xl mb-2 leading-tight">Netværks-Rouletten</h3>
+              <p class="text-slate-300 text-sm leading-relaxed mb-5">
+                Mangler du en aftale i pausen? Tryk på knappen og bliv parret med en ny virksomhed til en hurtig kop kaffe ved målstregen.
+              </p>
+
+              <button id="rouletteBtn" class="roulette-btn w-full py-4 rounded-md font-bold text-base inline-flex items-center justify-center gap-2">
+                <i data-lucide="shuffle" id="rouletteBtnIcon"></i>
+                <span id="rouletteBtnText">Match mig nu</span>
+              </button>
+
+              <div class="flex items-center justify-between text-[11px] text-slate-400 mt-4 pt-4 border-t border-white/10">
+                <span class="inline-flex items-center gap-1">
+                  <i data-lucide="users" class="text-wine-300"></i> <span id="rouletteAvailable">—</span> tilgængelige
+                </span>
+                <span class="inline-flex items-center gap-1">
+                  <i data-lucide="zap" class="text-wine-300"></i> 1.4 min. gennemsnit
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick stats card -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-card">
+            <div class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-3">DIN PROFIL</div>
+            <div class="flex items-center gap-3">
+              <div class="avatar w-12 h-12 rounded-full grid place-items-center text-sm">JH</div>
+              <div class="min-w-0">
+                <div class="font-bold text-charcoal-900 truncate">Jim Hoegh</div>
+                <div class="text-xs text-slate-500 truncate">Hoegh Consulting · Konsulent</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mt-4 text-center">
+              <div class="rounded-md bg-slate-50 py-2">
+                <div class="font-bold text-charcoal-900">12</div>
+                <div class="text-[10px] uppercase tracking-wider text-slate-500">Møder</div>
+              </div>
+              <div class="rounded-md bg-slate-50 py-2">
+                <div class="font-bold text-charcoal-900">4</div>
+                <div class="text-[10px] uppercase tracking-wider text-slate-500">Løb</div>
+              </div>
+              <div class="rounded-md bg-slate-50 py-2">
+                <div class="font-bold text-charcoal-900">28</div>
+                <div class="text-[10px] uppercase tracking-wider text-slate-500">Kontakter</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Next event card -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-md bg-wine-50 border border-wine-100 grid place-items-center text-wine-600 text-xl flex-shrink-0">
+                <i data-lucide="calendar-days"></i>
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs uppercase tracking-wider text-slate-500 font-bold">NÆSTE EVENT</div>
+                <div class="font-bold text-charcoal-900 leading-snug">Fredagsløb & Netværk</div>
+                <div class="text-sm text-slate-500">18. sept. · kl. 18:00 — 23:00</div>
+                <button class="mt-3 text-sm font-semibold text-wine-600 hover:text-wine-700 inline-flex items-center gap-1">
+                  Se programmet <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- BOOKING SUCCESS MODAL -->
+  <div id="bookingModal" class="modal-backdrop">
+    <div class="modal-card pop-in text-center">
+      <div class="w-16 h-16 rounded-full bg-wine-50 border border-wine-100 grid place-items-center mx-auto mb-4 text-wine-600 text-2xl">
+        <i data-lucide="check"></i>
+      </div>
+      <h3 class="font-display font-bold text-2xl text-charcoal-900 mb-2">Mødeforespørgsel sendt!</h3>
+      <p class="text-slate-600 text-sm leading-relaxed mb-5">
+        Vi har sendt din invitation til <strong class="text-charcoal-900" id="bookingTargetName">virksomheden</strong>. I får besked via mail, så snart de svarer — typisk inden for et par timer.
+      </p>
+      <div class="bg-slate-50 rounded-md p-4 text-left text-sm space-y-2 mb-6">
+        <div class="flex items-center gap-2 text-slate-600">
+          <i data-lucide="calendar" class="text-wine-600"></i>
+          Fredagsløb & Netværk · 18. september
+        </div>
+        <div class="flex items-center gap-2 text-slate-600">
+          <i data-lucide="map-pin" class="text-wine-600"></i>
+          Mødested aftales i appen
+        </div>
+        <div class="flex items-center gap-2 text-slate-600">
+          <i data-lucide="clock" class="text-wine-600"></i>
+          <span id="bookingPause">Mellem 3. og 4. løb</span>
+        </div>
+      </div>
+      <button class="btn-primary w-full py-3 rounded-md font-semibold" onclick="closeModal('bookingModal')">
+        Tilbage til Paddocken
+      </button>
+    </div>
+  </div>
+
+  <!-- ROULETTE RESULT MODAL -->
+  <div id="rouletteModal" class="modal-backdrop">
+    <div class="modal-card pop-in">
+      <div class="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-wine-600 font-bold mb-2">
+        <i data-lucide="sparkles"></i> DU ER MATCHET
+      </div>
+      <h3 class="font-display font-bold text-2xl text-charcoal-900 mb-5">Sig hej til...</h3>
+
+      <div id="rouletteMatchCard" class="rounded-xl border border-wine-100 bg-gradient-to-br from-wine-50 via-white to-white p-5 mb-5">
+        <div class="flex items-start gap-4">
+          <div class="avatar w-14 h-14 rounded-full grid place-items-center flex-shrink-0 text-base" id="rouletteAvatar">—</div>
+          <div class="min-w-0 flex-1">
+            <div class="font-bold text-charcoal-900 text-lg leading-tight" id="rouletteName">—</div>
+            <div class="text-sm text-slate-600" id="rouletteIndustry">—</div>
+            <div class="text-xs text-slate-500 mt-1" id="rouletteContact">—</div>
+          </div>
+        </div>
+        <div class="border-t border-wine-100 mt-4 pt-3 grid grid-cols-2 gap-2 text-sm">
+          <div class="flex items-start gap-2">
+            <i data-lucide="clock" class="text-wine-600 mt-0.5"></i>
+            <div>
+              <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">PAUSE</div>
+              <div class="font-semibold text-charcoal-900" id="roulettePause">—</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <i data-lucide="map-pin" class="text-wine-600 mt-0.5"></i>
+            <div>
+              <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">MØDESTED</div>
+              <div class="font-semibold text-charcoal-900" id="rouletteLocation">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button class="btn-outline py-3 rounded-md font-semibold text-sm inline-flex items-center justify-center gap-2" onclick="runRoulette()">
+          <i data-lucide="refresh-cw"></i> Find nyt match
+        </button>
+        <button class="btn-primary py-3 rounded-md font-semibold text-sm inline-flex items-center justify-center gap-2" onclick="acceptRouletteMatch()">
+          <i data-lucide="send"></i> Send møde
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 mt-16">
+    <div class="max-w-6xl mx-auto px-6 pt-10 pb-2">
+      <img src="assets/logo.svg" alt="Fyens Væddeløbsbane" class="w-16 h-16 rounded-full" />
+    </div>
+    <div class="max-w-6xl mx-auto px-6 py-8 grid sm:grid-cols-3 gap-8 text-sm border-t border-slate-100">
+      <div>
+        <div class="font-bold text-wine-600 mb-2">Fyens Væddeløbsbane A/S</div>
+        <div class="text-slate-600 leading-relaxed">
+          Prins Haralds Alle 51 B<br>5250 Odense SV<br>Tlf.: +45 888 112 05
+        </div>
+      </div>
+      <div>
+        <div class="font-bold text-wine-600 mb-2">Den Digitale Paddock</div>
+        <div class="text-slate-600 leading-relaxed">
+          Kontaktperson: Jan Arentoft<br>Tlf.: +45 24 85 97 02<br>info@fvbsponsor.dk
+        </div>
+      </div>
+      <div>
+        <div class="font-bold text-wine-600 mb-2">Information</div>
+        <div class="text-slate-600 leading-relaxed">
+          Om Sponsornetværket<br>Bliv medlem<br>Programkalender
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-slate-100">
+      <div class="max-w-6xl mx-auto px-6 py-4 text-xs text-slate-400">
+        © Fyens Væddeløbsbane 2026 · Den Digitale Paddock
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== MOCK DATA =====
+    const COMPANIES = [
+      {
+        id: 'fynsmaskin',
+        name: 'Fyens Maskinfabrik A/S',
+        industry: 'Produktion',
+        bio: 'Familieejet maskinfabrik med 75 års erfaring inden for præcisionsbearbejdning til energi- og maritimsektoren. 120 ansatte i Odense.',
+        seeking: 'Underleverandører af elektronik og specialstål',
+        offering: 'CNC-kapacitet, sub-supply, prototypeproduktion',
+        contact: 'Per Nielsen, Adm. dir.',
+        initials: 'FM',
+        attending: true
+      },
+      {
+        id: 'nordfyn',
+        name: 'Nordfyn Advokatpartnerselskab',
+        industry: 'Jura',
+        bio: 'Erhvervsadvokater med speciale i M&A, ansættelsesret og fast ejendom. Vi rådgiver fynske vækstvirksomheder fra 5 til 500 ansatte.',
+        seeking: 'Vækstvirksomheder med behov for løbende juridisk sparring',
+        offering: 'Juridisk rådgivning, M&A-bistand, kontraktudarbejdelse',
+        contact: 'Lone Madsen, Partner',
+        initials: 'NA',
+        attending: true
+      },
+      {
+        id: 'bluebit',
+        name: 'BlueBit Software ApS',
+        industry: 'Tech',
+        bio: 'Vi bygger skræddersyede SaaS-løsninger til mellemstore B2B-virksomheder — fra ERP-integration til mobile apps. 24 udviklere i Odense.',
+        seeking: 'Distributører og whitelabel-partnere i Jylland',
+        offering: 'Custom udvikling, AI-integration, teknisk due diligence',
+        contact: 'Mads Bjerregaard, CTO',
+        initials: 'BB',
+        attending: true
+      },
+      {
+        id: 'odensebyg',
+        name: 'Odense Byggeselskab',
+        industry: 'Byggeri',
+        bio: 'Totalentreprenør med fokus på erhvervsbyggeri, lagerhaller og kontorrenoveringer. 90 ansatte og over 40 års lokal erfaring.',
+        seeking: 'Bygherrer til lager- og kontorprojekter 1.000-10.000 m²',
+        offering: 'Total- og hovedentreprise, lokalkendskab, fast bygherreteam',
+        contact: 'Henrik Sørensen, Direktør',
+        initials: 'OB',
+        attending: true
+      },
+      {
+        id: 'munkrev',
+        name: 'Munk Revision',
+        industry: 'Revision',
+        bio: 'Statsautoriseret revisor med 40 ejer-ledede virksomheder som kunder. Specialiseret i generationsskifte og virksomhedsoverdragelse.',
+        seeking: 'Ejerledere der står foran generationsskifte',
+        offering: 'Revision, skatterådgivning, due diligence',
+        contact: 'Anders Munk, Stats.aut. revisor',
+        initials: 'MR',
+        attending: true
+      },
+      {
+        id: 'trio',
+        name: 'Trio Reklamebureau',
+        industry: 'Marketing',
+        bio: 'Et fuld-service reklamebureau med 18 kreative kræfter. Vi løfter B2B-brands fra "kedelige" til "must-watch" på SoMe og web.',
+        seeking: 'B2B-virksomheder klar til strategisk rebranding',
+        offering: 'Strategi, identitet, web, video, SoMe-content',
+        contact: 'Sara Holm, Creative Director',
+        initials: 'TR',
+        attending: true
+      },
+      {
+        id: 'havntech',
+        name: 'HavnTech Solutions',
+        industry: 'Tech',
+        bio: 'IT-driftspartner for små og mellemstore virksomheder på Fyn. Vi tager hele IT-ansvaret, så ledelsen kan fokusere på forretningen.',
+        seeking: 'Virksomheder med 20-150 ansatte uden egen IT-funktion',
+        offering: 'Managed IT, cloud-migration, cybersecurity',
+        contact: 'Tine Lauritzen, CEO',
+        initials: 'HT',
+        attending: true
+      },
+      {
+        id: 'skovgaard',
+        name: 'Skovgaard Ejendomme',
+        industry: 'Ejendomme',
+        bio: 'Erhvervsmægler med 180.000 m² erhvervsejendomme under administration. Stærk lokal kendskab til Fyn og Trekantområdet.',
+        seeking: 'Lejere til kontor og logistik i Odense og Middelfart',
+        offering: 'Erhvervsudlejning, investering, due diligence',
+        contact: 'Kasper Skovgaard, Mægler',
+        initials: 'SE',
+        attending: true
+      },
+      {
+        id: 'finansgrp',
+        name: 'Fyns Finansgruppen',
+        industry: 'Finans',
+        bio: 'Uafhængige finansielle rådgivere. Vi hjælper ejerledere med kapitalfremskaffelse, finansiel strukturering og exit-planlægning.',
+        seeking: 'Vækstvirksomheder, der overvejer kapitalindskud eller exit',
+        offering: 'Kapitalrådgivning, M&A advisory, finansiel modellering',
+        contact: 'Mette Eriksen, Senior Partner',
+        initials: 'FF',
+        attending: false
+      },
+      {
+        id: 'odenselog',
+        name: 'Odense Logistik & Transport',
+        industry: 'Logistik',
+        bio: 'Tredjepartslogistik (3PL) med 14.000 m² lagerfacilitet i Odense Havn. Vi håndterer alt fra ind-/udgående gods til e-commerce-fulfilment.',
+        seeking: 'E-commerce-virksomheder med 500+ ordrer/dag',
+        offering: '3PL, fulfilment, distribution i Skandinavien',
+        contact: 'Jonas Vesterager, Salgschef',
+        initials: 'OL',
+        attending: true
+      }
+    ];
+
+    const INDUSTRIES = [...new Set(COMPANIES.map(c => c.industry))].sort();
+
+    const PAUSES = [
+      'Mellem 1. og 2. løb (kl. 18:30)',
+      'Mellem 3. og 4. løb (kl. 19:45)',
+      'Mellem 5. og 6. løb (kl. 21:00)',
+      'I løbspausen kl. 20:15',
+      'Efter sidste løb (kl. 22:30)'
+    ];
+
+    const LOCATIONS = [
+      'Kaffebaren ved Tribunen',
+      'VIP-Loungen på 1. sal',
+      'Paddock-baren',
+      'Bistroen ved målstregen',
+      'Champagne-baren',
+      'Direktørloungen',
+      'Tribunens balkon'
+    ];
+
+    // ===== STATE =====
+    let activeFilter = 'Alle';
+    let searchQuery = '';
+    let lastRouletteId = null;
+
+    // ===== HEADER STATS =====
+    document.getElementById('statCompanies').textContent = COMPANIES.length * 11; // appear bigger
+    document.getElementById('attendeeCount').textContent = COMPANIES.filter(c => c.attending).length;
+    document.getElementById('rouletteAvailable').textContent = COMPANIES.filter(c => c.attending).length;
+
+    // ===== RENDER STALDEN =====
+    function renderStalden() {
+      const grid = document.getElementById('staldenGrid');
+      // Show first 4 for visual focus
+      const featured = COMPANIES.slice(0, 4);
+      grid.innerHTML = featured.map((c, i) => `
+        <article class="bg-white rounded-xl border border-slate-200 p-6 shadow-card hover:shadow-cardHover transition-all hover:-translate-y-0.5 group flex flex-col">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="avatar alt-${(i % 4) + 1} w-14 h-14 rounded-lg grid place-items-center text-base flex-shrink-0">${c.initials}</div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] uppercase tracking-[0.15em] text-wine-600 font-bold px-2 py-0.5 bg-wine-50 border border-wine-100 rounded">${c.industry}</span>
+              </div>
+              <h3 class="font-display font-bold text-lg text-charcoal-900 leading-tight">${c.name}</h3>
+              <div class="text-xs text-slate-500 mt-1">${c.contact}</div>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 leading-relaxed mb-4">${c.bio}</p>
+
+          <div class="space-y-2 mb-5 text-sm flex-1">
+            <div class="flex items-start gap-2">
+              <i data-lucide="search" class="text-wine-600 mt-0.5 flex-shrink-0"></i>
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">VI SØGER</div>
+                <div class="text-charcoal-900">${c.seeking}</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-2">
+              <i data-lucide="gift" class="text-wine-600 mt-0.5 flex-shrink-0"></i>
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">VI TILBYDER</div>
+                <div class="text-charcoal-900">${c.offering}</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary w-full py-2.5 rounded-md text-sm font-semibold inline-flex items-center justify-center gap-2">
+            Se B2B Ydelser <i data-lucide="arrow-right"></i>
+          </button>
+        </article>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // ===== RENDER FILTER CHIPS =====
+    function renderChips() {
+      const wrap = document.getElementById('filterChips');
+      const chips = ['Alle', ...INDUSTRIES];
+      wrap.innerHTML = chips.map(label => `
+        <button data-filter="${label}" class="chip text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 bg-white text-slate-700 ${label === activeFilter ? 'active' : ''}">
+          ${label}
+        </button>
+      `).join('');
+      wrap.querySelectorAll('.chip').forEach(b => {
+        b.addEventListener('click', () => {
+          activeFilter = b.dataset.filter;
+          renderChips();
+          renderAttendees();
+        });
+      });
+    }
+
+    // ===== RENDER ATTENDEES =====
+    function renderAttendees() {
+      const list = document.getElementById('attendeeList');
+      const empty = document.getElementById('attendeeEmpty');
+      const q = searchQuery.toLowerCase().trim();
+
+      const filtered = COMPANIES.filter(c =>
+        c.attending &&
+        (activeFilter === 'Alle' || c.industry === activeFilter) &&
+        (q === '' || c.name.toLowerCase().includes(q) || c.industry.toLowerCase().includes(q) || c.contact.toLowerCase().includes(q))
+      );
+
+      if (filtered.length === 0) {
+        list.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      list.innerHTML = filtered.map((c, i) => `
+        <div class="attendee-row bg-white rounded-lg border border-slate-200 p-4 flex items-center justify-between gap-3 fade-in-up" style="animation-delay: ${i * 30}ms">
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <div class="avatar alt-${(i % 4) + 1} w-11 h-11 rounded-md grid place-items-center text-sm flex-shrink-0">${c.initials}</div>
+            <div class="min-w-0">
+              <div class="font-bold text-charcoal-900 truncate">${c.name}</div>
+              <div class="text-xs text-slate-500 truncate">${c.contact} · <span class="text-wine-600 font-semibold">${c.industry}</span></div>
+            </div>
+          </div>
+          <button class="btn-primary px-3 py-2 rounded-md text-xs font-semibold inline-flex items-center gap-1.5 flex-shrink-0" onclick="bookMeeting('${c.id}')">
+            <i data-lucide="calendar-plus"></i>
+            <span class="hidden sm:inline">Book møde i pausen</span>
+            <span class="sm:hidden">Book</span>
+          </button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // ===== BOOK MEETING =====
+    function bookMeeting(id) {
+      const c = COMPANIES.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById('bookingTargetName').textContent = c.name;
+      document.getElementById('bookingPause').textContent = PAUSES[Math.floor(Math.random() * PAUSES.length)];
+      openModal('bookingModal');
+    }
+
+    // ===== ROULETTE =====
+    const rBtn = document.getElementById('rouletteBtn');
+    const rBtnText = document.getElementById('rouletteBtnText');
+    const rBtnIcon = document.getElementById('rouletteBtnIcon');
+
+    function runRoulette() {
+      rBtn.disabled = true;
+      rBtnText.textContent = 'Finder match...';
+      rBtnIcon.setAttribute('data-lucide', 'loader-2');
+      rBtnIcon.classList.add('spin');
+      lucide.createIcons();
+      closeModal('rouletteModal');
+
+      setTimeout(() => {
+        // Pool: attending companies, avoid repeating the last match
+        const pool = COMPANIES.filter(c => c.attending && c.id !== lastRouletteId);
+        const match = pool[Math.floor(Math.random() * pool.length)];
+        lastRouletteId = match.id;
+
+        const pause = PAUSES[Math.floor(Math.random() * PAUSES.length)];
+        const loc = LOCATIONS[Math.floor(Math.random() * LOCATIONS.length)];
+
+        document.getElementById('rouletteAvatar').textContent = match.initials;
+        document.getElementById('rouletteName').textContent = match.name;
+        document.getElementById('rouletteIndustry').textContent = match.industry;
+        document.getElementById('rouletteContact').textContent = match.contact;
+        document.getElementById('roulettePause').textContent = pause;
+        document.getElementById('rouletteLocation').textContent = loc;
+
+        openModal('rouletteModal');
+        rBtn.disabled = false;
+        rBtnText.textContent = 'Match mig igen';
+        rBtnIcon.setAttribute('data-lucide', 'shuffle');
+        rBtnIcon.classList.remove('spin');
+        lucide.createIcons();
+      }, 1500);
+    }
+
+    function acceptRouletteMatch() {
+      const name = document.getElementById('rouletteName').textContent;
+      const pause = document.getElementById('roulettePause').textContent;
+      document.getElementById('bookingTargetName').textContent = name;
+      document.getElementById('bookingPause').textContent = pause;
+      closeModal('rouletteModal');
+      openModal('bookingModal');
+    }
+
+    rBtn.addEventListener('click', runRoulette);
+
+    // ===== MODAL HELPERS =====
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      lucide.createIcons();
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+    // Click backdrop to close
+    document.querySelectorAll('.modal-backdrop').forEach(m => {
+      m.addEventListener('click', e => {
+        if (e.target === m) m.classList.remove('open');
+      });
+    });
+    // ESC to close
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+    });
+
+    // ===== SEARCH =====
+    document.getElementById('attendeeSearch').addEventListener('input', e => {
+      searchQuery = e.target.value;
+      renderAttendees();
+    });
+
+    // ===== INIT =====
+    renderStalden();
+    renderChips();
+    renderAttendees();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
